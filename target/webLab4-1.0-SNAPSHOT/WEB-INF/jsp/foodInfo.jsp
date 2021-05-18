@@ -1,8 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div style="border: black solid 2px" class="item">
-    <img src="data:image/jpg;base64,${param.image}" width="300px" height="300px">
-    <a href="#"><h2>${param.name}</h2></a>
+    <img src="data:image/jpg;base64,${param.image}" width="300px" height="300px"><br>
+    <c:url value="ElementInfoController" var="url">
+        <c:param name="elementId" value="${param.elementId}" />
+    </c:url>
+    <a href="${url}">${param.name}</a>
     <p>${param.description}</p>
     <p>${param.ingredients}</p>
     <p>${param.price}</p>

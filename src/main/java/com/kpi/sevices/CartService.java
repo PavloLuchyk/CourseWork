@@ -45,7 +45,7 @@ public class CartService {
     }
 
     public static void order(HttpServletRequest request){
-        int userId = 1;
+        int userId = 3;
         if (request.getSession().getAttribute("userId") != null){
             userId = (int) request.getSession().getAttribute("userId");
         }
