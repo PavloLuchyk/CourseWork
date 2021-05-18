@@ -28,7 +28,6 @@ public class UpdateImageController extends HttpServlet {
             byte[] buf = new byte[inputStream.available()];
             inputStream.read(buf);
             menuElementDao.updateImage(elementId, buf);
-            System.out.println(Arrays.equals(buf, menuElementDao.get(elementId).getImage()));
         }
         request.setAttribute("menuElement", menuElementDao.get(Integer.parseInt(request.getParameter("elementId"))));
         request.getRequestDispatcher("WEB-INF/jsp/elementUpdatePage.jsp").forward(request, response);

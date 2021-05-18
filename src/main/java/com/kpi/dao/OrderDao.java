@@ -56,6 +56,17 @@ public class OrderDao implements DAO<Order>{
         }
     }
 
+    public void updateOrderStatus(int id){
+        String update = "update orders set  orderDone = TRUE where orderId = ?";
+        try (Connection con = getConnection();
+             PreparedStatement preparedStatement = con.prepareStatement(update)) {
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Exception!" + e.getMessage());
+        }
+    }
+
     @Override
     public Order get(int id) {
         String select = "select * from orders where orderId = ?;";
@@ -71,6 +82,23 @@ public class OrderDao implements DAO<Order>{
             System.out.println("Exception!" + e.getMessage());
         }
         return new Order(-1, -1, new Timestamp(0L), false);
+    }
+
+    public ArrayList<Order> getUndoneOrders(){
+        ArrayList<Order> orders = new ArrayList<>();
+        String select = "select * from orders where orderDone = FALSE;";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(select);
+             ResultSet rs = preparedStatement.executeQuery()) {
+                while (rs.next()) {
+                    orders.add(new Order(rs.getInt(1),
+                            rs.getInt(2),
+                            rs.getTimestamp(3),
+                            rs.getBoolean(4)));
+                }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Exception!" + e.getMessage());
+        }
+        return orders;
     }
 
     public ArrayList<Order> getByUserId(int id) {
