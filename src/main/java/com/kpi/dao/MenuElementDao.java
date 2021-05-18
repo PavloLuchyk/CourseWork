@@ -36,10 +36,10 @@ public class MenuElementDao implements DAO<MenuElement> {
 
     @Override
     public void delete(int id) {
-        try (Connection con = getConnection();
-             Statement stmt = con.createStatement()) {
-            stmt.executeUpdate("delete from menuelements where idmenuElements="+ id +";");
-
+        String delete = "delete from menuelements where idmenuElement = ?;";
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(delete)) {
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println("Exception!" + e.getMessage());
         }
@@ -85,7 +85,6 @@ public class MenuElementDao implements DAO<MenuElement> {
             try (Connection con = getConnection();
                  Statement stmt = con.createStatement();
                  ResultSet rs = stmt.executeQuery("select * from menuelements;")) {
-                System.out.println("fadf");
                 ArrayList<MenuElement> menuElements = new ArrayList<>();
                 while (rs.next()) {
                     menuElements.add(new MenuElement(

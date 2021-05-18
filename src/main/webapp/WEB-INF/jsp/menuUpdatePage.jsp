@@ -24,11 +24,11 @@
     <p>${i.description}</p>
     <p>${i.ingredients}</p>
     <p>${i.price}</p>
-    <form action="UpdateController">
+    <form action="UpdateController" method="post">
         <input name="elementId" value="${i.elementId}" type="hidden">
         <input type="submit" value="Edit">
     </form>
-    <form action="DeleteElementController">
+    <form action="DeleteElementController" method="post">
         <input name="elementId" value="${i.elementId}" type="hidden">
         <input type="submit" value="Delete">
     </form>

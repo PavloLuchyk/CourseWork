@@ -33,7 +33,7 @@
 
 </c:forEach>
 </table>
-<h1> Total price: <p id="totalPrice"></p> </h1>
+<h1> Total price: <b id="totalPrice"></b> </h1>
 <form method="post" action="OrderController" id="order">
     <input type="submit" value="Order">
 </form>

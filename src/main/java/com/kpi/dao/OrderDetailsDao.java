@@ -38,6 +38,15 @@ public class OrderDetailsDao implements DAO<OrderDetails> {
         }
     }
 
+    public void deleteByMenuElementId(int id){
+        String delete ="delete from orderdetails where menuelementId = ?;";
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(delete)){
+            preparedStatement.setInt(1, id);
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Exception!" + e.getMessage());
+        }
+    }
+
     @Override
     public void update(OrderDetails a) {
         String update ="update orderdetails set orderId = ?, menuelementId = ?, quantity = ?;";
