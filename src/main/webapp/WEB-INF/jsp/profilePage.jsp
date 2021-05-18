@@ -7,7 +7,6 @@
 <body>
 <%@include file="header.jsp"%>
 <a href="OrderHistoryController">View order history</a> <br>
-<a href="UserUpdateController">Change profile details</a> <br>
 <c:if test="${admin == true}">
     <h1>Admin control panel</h1>
     <a href="OrderProcessingController">Process orders</a> <br>

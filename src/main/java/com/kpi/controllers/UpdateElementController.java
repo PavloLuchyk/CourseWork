@@ -1,7 +1,6 @@
 package com.kpi.controllers;
 
-import com.kpi.dao.MenuElementDao;
-import com.kpi.models.Menu;
+import com.kpi.dao.mysql.MenuElementMySQLDao;
 import com.kpi.models.MenuElement;
 
 import javax.servlet.*;
@@ -13,14 +12,14 @@ import java.io.IOException;
 public class UpdateElementController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        MenuElementDao menuElementDao = new MenuElementDao();
+        MenuElementMySQLDao menuElementDao = new MenuElementMySQLDao();
         request.setAttribute("menuElement", menuElementDao.get(Integer.parseInt(request.getParameter("menuElementId"))));
         request.getRequestDispatcher("WEB-INF/jsp/elementUpdatePage.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        MenuElementDao menuElementDao = new MenuElementDao();
+        MenuElementMySQLDao menuElementDao = new MenuElementMySQLDao();
         MenuElement menuElement = new MenuElement(
                 Integer.parseInt(request.getParameter("elementId")),
                 request.getParameter("name"),

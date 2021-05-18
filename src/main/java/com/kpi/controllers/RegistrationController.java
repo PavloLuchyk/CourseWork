@@ -1,6 +1,6 @@
 package com.kpi.controllers;
 
-import com.kpi.dao.UserDao;
+import com.kpi.dao.mysql.UserMySQLDao;
 import com.kpi.models.User;
 import com.kpi.sevices.UserService;
 import com.kpi.validation.UserValidation;
@@ -27,7 +27,7 @@ public class RegistrationController extends HttpServlet {
         UserValidation userValidation = new UserValidation();
         if (userValidation.validate(userWrapper).isResult()){
             User user = UserService.getUser(userWrapper);
-            UserDao userDao = new UserDao();
+            UserMySQLDao userDao = new UserMySQLDao();
             userDao.add(user);
             response.setContentType("text/html");
             request.getRequestDispatcher("WEB-INF/jsp/loginPage.jsp").include(request, response);

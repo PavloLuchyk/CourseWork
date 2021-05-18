@@ -1,8 +1,8 @@
 package com.kpi.sevices;
 
-import com.kpi.dao.MenuElementDao;
-import com.kpi.dao.OrderDao;
-import com.kpi.dao.OrderDetailsDao;
+import com.kpi.dao.mysql.MenuElementMySQLDao;
+import com.kpi.dao.mysql.OrderMySQLDao;
+import com.kpi.dao.mysql.OrderDetailsMySQLDao;
 import com.kpi.models.MenuElement;
 import com.kpi.models.Order;
 import com.kpi.models.OrderDetails;
@@ -33,7 +33,7 @@ public class CartService {
 
     public static HashMap<OrderDetails, MenuElement> getOrderDetailsWithMenu(ArrayList<OrderDetails> orderDetails){
         HashMap<OrderDetails, MenuElement> orderMenuElements = new HashMap<>();
-        MenuElementDao menuElementDao = new MenuElementDao();
+        MenuElementMySQLDao menuElementDao = new MenuElementMySQLDao();
         for (OrderDetails i: orderDetails){
             for (MenuElement j: menuElementDao.getAll()){
                 if (i.getMenuElementId() == j.getElementId()){
@@ -51,10 +51,10 @@ public class CartService {
         }
         ArrayList<OrderDetails> orderDetails = getCartList(request);
         Order order = new Order(userId, new Timestamp(System.currentTimeMillis()));
-        OrderDao orderDao = new OrderDao();
+        OrderMySQLDao orderDao = new OrderMySQLDao();
         orderDao.add(order);
         int orderId = orderDao.getAll().get(orderDao.getAll().size()-1).getOrderId();
-        OrderDetailsDao orderDetailsDao = new OrderDetailsDao();
+        OrderDetailsMySQLDao orderDetailsDao = new OrderDetailsMySQLDao();
         for (OrderDetails i: orderDetails){
             i.setOrderId(orderId);
             orderDetailsDao.add(i);

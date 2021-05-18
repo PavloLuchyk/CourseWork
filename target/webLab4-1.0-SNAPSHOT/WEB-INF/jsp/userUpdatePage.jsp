@@ -5,10 +5,12 @@
 </head>
 <body>
 <%@include file="header.jsp"%>
-<a href="#">Change username</a>
-<a href="#">Change email</a>
-<a href="#">Change phone number</a>
-<a href="#">Change password</a>
+<div id="updateMessage"></div>
+<form method="post" action="UserUpdateController">
+    <input name="username" type="text" value="${user.username}">
+    <input name="username" type="text" value="${user.email}">
+    <input name="username" type="text" value="${user.phoneNumber}">
+</form>
 <%@include file="footer.jsp"%>
 </body>
 </html>

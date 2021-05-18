@@ -1,6 +1,6 @@
 package com.kpi.controllers;
 
-import com.kpi.dao.UserDao;
+import com.kpi.dao.mysql.UserMySQLDao;
 import com.kpi.models.User;
 import com.kpi.sevices.UserService;
 
@@ -25,7 +25,7 @@ public class LogInController extends HttpServlet {
         response.setContentType("text/html");
         String username =  request.getParameter("username");
         String password = request.getParameter("password");
-        ArrayList<User> users = new UserDao().getAll();
+        ArrayList<User> users = new UserMySQLDao().getAll();
         for (User user: users){
             if (user.getUsername().equals(username)){
                 try {

@@ -13,6 +13,13 @@ public class UserWrapper {
         this.phoneNumber = phoneNumber;
     }
 
+    public UserWrapper(String username, String email, String phoneNumber) {
+        this.username = username;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.password = "!User1234";
+    }
+
     public String getUsername() {
         return username;
     }

@@ -1,9 +1,7 @@
 package com.kpi.controllers;
 
-import com.kpi.dao.MenuElementDao;
-import com.kpi.dao.OrderDao;
-import com.kpi.dao.OrderDetailsDao;
-import com.kpi.dao.UserDao;
+import com.kpi.dao.mysql.OrderMySQLDao;
+import com.kpi.dao.mysql.OrderDetailsMySQLDao;
 import com.kpi.models.MenuElement;
 import com.kpi.models.Order;
 import com.kpi.models.OrderDetails;
@@ -30,10 +28,10 @@ public class OrderHistoryController extends HttpServlet {
 
     private void processData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         int userId = (int) request.getSession().getAttribute("userId");
-        OrderDao orderDao = new OrderDao();
+        OrderMySQLDao orderDao = new OrderMySQLDao();
         ArrayList<Order> orders = orderDao.getByUserId(userId);
         HashMap<Order, HashMap<OrderDetails, MenuElement>> orderHistory = new HashMap<>();
-        OrderDetailsDao orderDetailsDao = new OrderDetailsDao();
+        OrderDetailsMySQLDao orderDetailsDao = new OrderDetailsMySQLDao();
         for (Order order: orders){
             ArrayList<OrderDetails> orderDetails = orderDetailsDao.getAllByOrdersId(order.getOrderId());
             orderHistory.put(order, CartService.getOrderDetailsWithMenu(orderDetails));

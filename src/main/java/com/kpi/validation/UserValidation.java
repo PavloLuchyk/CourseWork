@@ -1,6 +1,6 @@
 package com.kpi.validation;
 
-import com.kpi.dao.UserDao;
+import com.kpi.dao.mysql.UserMySQLDao;
 import com.kpi.models.User;
 import com.kpi.wrapper.UserWrapper;
 
@@ -26,11 +26,11 @@ public class UserValidation implements Validation<UserWrapper> {
         return new ValidationResult(true, "Successful");
     }
 
-    private boolean isUsernameValid(String username){
+    public boolean isUsernameValid(String username){
         if (username == null || username.length() < 5 || username.length() > 20){
             return false;
         }
-        ArrayList<User> users = new UserDao().getAll();
+        ArrayList<User> users = new UserMySQLDao().getAll();
         for (User user: users){
             if (user.getUsername().equals(username)){
                 return false;
@@ -39,7 +39,7 @@ public class UserValidation implements Validation<UserWrapper> {
         return true;
     }
 
-    private boolean isEmailValid(String email){
+    public boolean isEmailValid(String email){
         if (email == null){
             return false;
         }
@@ -49,7 +49,7 @@ public class UserValidation implements Validation<UserWrapper> {
         if (!matcher.matches()){
             return false;
         }
-        ArrayList<User> users = new UserDao().getAll();
+        ArrayList<User> users = new UserMySQLDao().getAll();
         for (User user: users){
             if (user.getEmail().equals(email)){
                 return false;
@@ -58,7 +58,7 @@ public class UserValidation implements Validation<UserWrapper> {
         return true;
     }
 
-    private boolean isPhoneNumberValid(String phoneNumber){
+    public boolean isPhoneNumberValid(String phoneNumber){
         if (phoneNumber == null){
             return false;
         }
@@ -70,7 +70,7 @@ public class UserValidation implements Validation<UserWrapper> {
         if (!matcher.matches()){
             return false;
         }
-        ArrayList<User> users = new UserDao().getAll();
+        ArrayList<User> users = new UserMySQLDao().getAll();
         for (User user: users){
             if (user.getPhoneNumber().equals(phoneNumber)){
                 return false;
@@ -79,7 +79,7 @@ public class UserValidation implements Validation<UserWrapper> {
         return true;
     }
 
-    private boolean isPasswordValid(String password){
+    public boolean isPasswordValid(String password){
         if (password == null){
             return false;
         }

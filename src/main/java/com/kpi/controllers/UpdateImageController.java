@@ -1,14 +1,12 @@
 package com.kpi.controllers;
 
-import com.kpi.dao.MenuElementDao;
-import com.kpi.models.MenuElement;
+import com.kpi.dao.mysql.MenuElementMySQLDao;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 
 @WebServlet(name = "UpdateImageController", value = "/UpdateImageController")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024,
@@ -23,7 +21,7 @@ public class UpdateImageController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int elementId = Integer.parseInt(request.getParameter("elementId"));
-        MenuElementDao menuElementDao = new MenuElementDao();
+        MenuElementMySQLDao menuElementDao = new MenuElementMySQLDao();
         try(InputStream inputStream = request.getPart("file").getInputStream()) {
             byte[] buf = new byte[inputStream.available()];
             inputStream.read(buf);

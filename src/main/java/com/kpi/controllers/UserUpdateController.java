@@ -7,21 +7,20 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet(name = "UserViewController", value = "/UserViewController")
-public class UserViewController extends HttpServlet {
+@WebServlet(name = "UserUpdateController", value = "/UserUpdateController")
+public class UserUpdateController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processData(request, response);
+        int userId = (int)request.getSession().getAttribute("userId");
+        UserMySQLDao userDao = new UserMySQLDao();
+        request.setAttribute("user", userDao.get(userId));
+        request.getRequestDispatcher("WEB-INF/jsp/userUpdatePage.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        processData(request, response);
-    }
-
-    private void processData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        int userId = (int)request.getSession().getAttribute("userId");
         UserMySQLDao userDao = new UserMySQLDao();
-        request.setAttribute("users", userDao.getAll());
-        request.getRequestDispatcher("WEB-INF/jsp/userViewPage.jsp").forward(request,response);
+
     }
 }
