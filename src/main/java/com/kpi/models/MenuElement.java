@@ -36,6 +36,13 @@ public class MenuElement {
         this.price = price;
     }
 
+    public MenuElement(String name, String description, String ingredients, double price) {
+        this.name = name;
+        this.description = description;
+        this.ingredients = ingredients;
+        this.price = price;
+    }
+
     public int getElementId() {
         return elementId;
     }

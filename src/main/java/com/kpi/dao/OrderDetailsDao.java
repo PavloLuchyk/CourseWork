@@ -17,7 +17,11 @@ public class OrderDetailsDao implements DAO<OrderDetails> {
     @Override
     public void add(OrderDetails a) {
         String insert ="insert into orderdetails(orderId, menuelementId, quantity) VALUES (?,?,?);";
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(insert)){
+        orderQuery(a, insert);
+    }
+
+    private void orderQuery(OrderDetails a, String sql) {
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(sql)){
             preparedStatement.setInt(1, a.getOrderId());
             preparedStatement.setInt(2, a.getMenuElementId());
             preparedStatement.setInt(3, a.getQuantity());
@@ -50,14 +54,7 @@ public class OrderDetailsDao implements DAO<OrderDetails> {
     @Override
     public void update(OrderDetails a) {
         String update ="update orderdetails set orderId = ?, menuelementId = ?, quantity = ?;";
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(update)){
-            preparedStatement.setInt(1, a.getOrderId());
-            preparedStatement.setInt(2, a.getMenuElementId());
-            preparedStatement.setInt(3, a.getQuantity());
-            preparedStatement.executeUpdate();
-        } catch (SQLException | ClassNotFoundException e) {
-            System.out.println("Exception!" + e.getMessage());
-        }
+        orderQuery(a, update);
     }
 
     @Override

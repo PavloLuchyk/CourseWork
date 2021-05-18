@@ -45,9 +45,19 @@ public class MenuElementDao implements DAO<MenuElement> {
         }
     }
 
-    @Override
-    public void update(MenuElement a) {
-        String update = "update menuelements set name=?, decription=?, ingredients=?, price=? where idmenuElement = ?;";
+    public void updateImage(int id, byte[] buf){
+        String update = "update menuelements set image = ? where (idmenuElement = ?);";
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(update)) {
+            preparedStatement.setBytes(1, buf);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Exception!" + e.getMessage());
+        }
+    }
+
+    public void updateDetails(MenuElement a){
+        String update = "update menuelements set name=?, description=?, ingredients=?, price=? where idmenuElement = ?;";
         try (Connection con = getConnection();
              PreparedStatement preparedStatement = con.prepareStatement(update)) {
             preparedStatement.setString(1, a.getName());
@@ -55,6 +65,23 @@ public class MenuElementDao implements DAO<MenuElement> {
             preparedStatement.setString(3, a.getIngredients());
             preparedStatement.setDouble(4, a.getPrice());
             preparedStatement.setInt(5, a.getElementId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Exception!" + e.getMessage());
+        }
+    }
+
+    @Override
+    public void update(MenuElement a) {
+        String update = "update menuelements set name=?, description=?, ingredients=?, price=?, image = ? where idmenuElement = ?;";
+        try (Connection con = getConnection();
+             PreparedStatement preparedStatement = con.prepareStatement(update)) {
+            preparedStatement.setString(1, a.getName());
+            preparedStatement.setString(2, a.getDescription());
+            preparedStatement.setString(3, a.getIngredients());
+            preparedStatement.setDouble(4, a.getPrice());
+            preparedStatement.setBytes(5, a.getImage());
+            preparedStatement.setInt(6, a.getElementId());
             preparedStatement.executeUpdate();
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println("Exception!" + e.getMessage());
