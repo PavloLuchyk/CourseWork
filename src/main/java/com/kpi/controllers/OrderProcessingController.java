@@ -1,5 +1,9 @@
 package com.kpi.controllers;
 
+import com.kpi.dao.DAOFactory;
+import com.kpi.dao.OrderDao;
+import com.kpi.dao.OrderDetailsDao;
+import com.kpi.dao.mysql.MySQLDaoFactory;
 import com.kpi.dao.mysql.OrderMySQLDao;
 import com.kpi.dao.mysql.OrderDetailsMySQLDao;
 import com.kpi.models.MenuElement;
@@ -18,10 +22,11 @@ import java.util.HashMap;
 public class OrderProcessingController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        OrderMySQLDao orderDao = new OrderMySQLDao();
+        DAOFactory daoFactory = new MySQLDaoFactory();
+        OrderDao orderDao = daoFactory.getOrderDao();
         ArrayList<Order> orders = orderDao.getUndoneOrders();
         HashMap<Order, HashMap<OrderDetails, MenuElement>> undoneOrders = new HashMap<>();
-        OrderDetailsMySQLDao orderDetailsDao = new OrderDetailsMySQLDao();
+        OrderDetailsDao orderDetailsDao = daoFactory.getOrderDetailsDao();
         for (Order order: orders){
             ArrayList<OrderDetails> orderDetails = orderDetailsDao.getAllByOrdersId(order.getOrderId());
             undoneOrders.put(order, CartService.getOrderDetailsWithMenu(orderDetails));
@@ -33,7 +38,7 @@ public class OrderProcessingController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int orderId = Integer.parseInt(request.getParameter("orderId"));
-        OrderMySQLDao orderDao = new OrderMySQLDao();
+        OrderDao orderDao = new MySQLDaoFactory().getOrderDao();
         orderDao.updateOrderStatus(orderId);
         request.getRequestDispatcher("WEB-INF/jsp/orderProcessingPage.jsp").forward(request, response);
     }

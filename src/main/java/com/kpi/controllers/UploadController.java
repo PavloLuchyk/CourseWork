@@ -1,5 +1,6 @@
 package com.kpi.controllers;
 
+import com.kpi.dao.MenuElementDao;
 import com.kpi.dao.mysql.MenuElementMySQLDao;
 import com.kpi.models.MenuElement;
 
@@ -20,7 +21,7 @@ public class UploadController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        MenuElementMySQLDao menuElementDao = new MenuElementMySQLDao();
+        MenuElementDao menuElementDao = new MenuElementMySQLDao();
         try(InputStream inputStream = request.getPart("file").getInputStream()) {
             byte[] buf = new byte[inputStream.available()];
             inputStream.read(buf);

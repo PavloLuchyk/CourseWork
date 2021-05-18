@@ -1,6 +1,9 @@
 package com.kpi.controllers;
 
-import com.kpi.dao.mysql.MenuElementMySQLDao;
+import com.kpi.dao.DAOFactory;
+import com.kpi.dao.MenuElementDao;
+import com.kpi.dao.OrderDetailsDao;
+import com.kpi.dao.mysql.MySQLDaoFactory;
 import com.kpi.dao.mysql.OrderDetailsMySQLDao;
 
 import javax.servlet.*;
@@ -18,9 +21,9 @@ public class DeleteElementController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int elementId = Integer.parseInt(request.getParameter("elementId"));
-        System.out.println(elementId);
-        MenuElementMySQLDao menuElementDao = new MenuElementMySQLDao();
-        OrderDetailsMySQLDao orderDetailsDao = new OrderDetailsMySQLDao();
+        DAOFactory mySQLDaoFactory = new MySQLDaoFactory();
+        MenuElementDao menuElementDao = mySQLDaoFactory.getMenuElementDao();
+        OrderDetailsDao orderDetailsDao = mySQLDaoFactory.getOrderDetailsDao();
         orderDetailsDao.deleteByMenuElementId(elementId);
         menuElementDao.delete(elementId);
         request.getRequestDispatcher("MenuUpdateController").forward(request,response);

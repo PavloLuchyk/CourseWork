@@ -1,6 +1,7 @@
 package com.kpi.controllers;
 
 import com.kpi.dao.mysql.MenuElementMySQLDao;
+import com.kpi.dao.mysql.MySQLDaoFactory;
 import com.kpi.models.Menu;
 
 import javax.servlet.*;
@@ -12,14 +13,14 @@ import java.io.IOException;
 public class IndexController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Menu menu = new Menu(new MenuElementMySQLDao().getAll());
+        Menu menu = new Menu(new MySQLDaoFactory().getMenuElementDao().getAll());
         request.setAttribute("menu", menu);
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Menu menu = new Menu(new MenuElementMySQLDao().getAll());
+        Menu menu = new Menu(new MySQLDaoFactory().getMenuElementDao().getAll());
         request.setAttribute("menu", menu);
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }

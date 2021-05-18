@@ -1,5 +1,6 @@
 package com.kpi.controllers;
 
+import com.kpi.dao.UserDao;
 import com.kpi.dao.mysql.UserMySQLDao;
 
 import javax.servlet.*;
@@ -20,7 +21,7 @@ public class UserViewController extends HttpServlet {
     }
 
     private void processData(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        UserMySQLDao userDao = new UserMySQLDao();
+        UserDao userDao = new UserMySQLDao();
         request.setAttribute("users", userDao.getAll());
         request.getRequestDispatcher("WEB-INF/jsp/userViewPage.jsp").forward(request,response);
     }
