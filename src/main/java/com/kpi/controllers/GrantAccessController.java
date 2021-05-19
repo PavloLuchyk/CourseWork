@@ -17,11 +17,16 @@ public class GrantAccessController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserDao userDao = new UserMySQLDao();
-        userDao.updateAdmin(
-                Integer.parseInt(request.getParameter("userId")),
-                Boolean.getBoolean(request.getParameter("admin"))
-        );
-        request.getRequestDispatcher("UserViewController").forward(request, response);
+        if  (request.getSession().getAttribute("admin")!= null
+                && (boolean) request.getSession().getAttribute("admin")) {
+            UserDao userDao = new UserMySQLDao();
+            userDao.updateAdmin(
+                    Integer.parseInt(request.getParameter("userId")),
+                    !Boolean.parseBoolean(request.getParameter("admin"))
+            );
+            request.getRequestDispatcher("UserViewController").forward(request, response);
+        } else {
+            response.sendRedirect("LogInController");
+        }
     }
 }

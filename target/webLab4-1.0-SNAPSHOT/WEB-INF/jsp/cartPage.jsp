@@ -2,11 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Cart</title>
 </head>
 <body>
 <%@include file="header.jsp"%>
-<div>${errorMessage}</div>
+<div style="color: red;">${errorMessage}</div>
 <table border="1" class="table" id="cart">
     <tr>
         <td>Element id</td>

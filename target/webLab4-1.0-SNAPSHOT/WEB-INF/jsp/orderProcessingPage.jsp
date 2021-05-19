@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Order processing</title>
 </head>
 <body>
 <%@include file="header.jsp" %>
@@ -11,10 +11,12 @@
     <table border="1">
         <tr>
             <td>Order id</td>
+            <td>User Id</td>
             <td>Order time</td>
         </tr>
         <tr>
             <td> ${order.key.orderId}</td>
+            <td>${order.key.userId}</td>
             <td> ${order.key.time}</td>
             <td>
                 <form action="OrderProcessingController" method="post">

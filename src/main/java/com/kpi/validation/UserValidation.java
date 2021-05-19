@@ -93,12 +93,12 @@ public class UserValidation implements Validation<UserWrapper> {
     }
 
     public boolean isAddressValid(String address){
-        if (address == null || address.length() < 10 || address.length() > 45){
+        if (address == null || address.length() < 6 || address.length() > 45){
             return false;
         }
         ArrayList<User> users = new UserMySQLDao().getAll();
         for (User user: users){
-            if (user.getAddress().equals(address)){
+            if (address.equals(user.getAddress())){
                 return false;
             }
         }

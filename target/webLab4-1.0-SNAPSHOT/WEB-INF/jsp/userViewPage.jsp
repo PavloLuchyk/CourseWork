@@ -11,6 +11,7 @@
         <td>Username</td>
         <td>Email</td>
         <td>Phone number</td>
+        <td>Address</td>
         <td>Creation time</td>
         <td>Admin</td>
     </tr>
@@ -20,8 +21,16 @@
             <td>${user.username}</td>
             <td>${user.email}</td>
             <td>${user.phoneNumber}</td>
+            <td>${user.address}</td>
             <td>${user.creationTime}</td>
             <td>${user.admin}</td>
+            <td>
+                <form action="GrantAccessController" method="post">
+                    <input name="userId" value="${user.userId}" type="hidden">
+                    <input name="admin" value="${user.admin}" type="hidden">
+                    <input type="submit" value="${!user.admin ? "Set admin" : "Remove admin"}">
+                </form>
+            </td>
         </tr>
 </c:forEach>
 </table>

@@ -28,7 +28,7 @@
                 <form action="GrantAccessController" method="post">
                     <input name="userId" value="${user.userId}" type="hidden">
                     <input name="admin" value="${user.admin}" type="hidden">
-                    <input type="submit" value="${user.admin ? "Set admin" : "Remove admin"}">
+                    <input type="submit" value="${!user.admin ? "Set admin" : "Remove admin"}">
                 </form>
             </td>
         </tr>

@@ -3,6 +3,14 @@
 <head>
     <title>Menu update</title>
 </head>
+<style>
+    .item{
+        border: black solid 2px; width: 25%;
+        display: inline-block; padding: 1%; margin: 2%;
+    }
+
+    .item:hover{ background-color: lightgray; }
+</style>
 <body>
 <%@include file="header.jsp"%>
 <div>

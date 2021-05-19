@@ -1,8 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>${menuElement.name}</title>
 </head>
+<style>
+    .item{
+        border: black solid 2px; width: 25%;
+        display: inline-block; padding: 1%; margin: 2%;}
+
+    .item:hover{ background-color: lightgray; }
+</style>
 <body>
 <%@include file="header.jsp"%>
 <div style="border: black solid 2px" class="item">

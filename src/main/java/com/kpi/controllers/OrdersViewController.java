@@ -21,16 +21,16 @@ import java.util.HashMap;
 public class OrdersViewController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         DAOFactory daoFactory = new MySQLDaoFactory();
         OrderDao orderDao = daoFactory.getOrderDao();
         ArrayList<Order> orders = orderDao.getAll();
         request.setAttribute("allOrders", OrderHistoryService.getOrders(daoFactory, orders));
         request.getRequestDispatcher("WEB-INF/jsp/allOrdersPage.jsp").forward(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 
 

@@ -3,14 +3,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>Menu</title>
+    <style>
+        .item{
+        border: black solid 2px; width: 25%;
+        display: inline-block; padding: 1%; margin: 2%;}
+
+        .item:hover{ background-color: lightgray; }
+    </style>
 </head>
 <body>
 <%@include file="header.jsp"%>
 <br/>
 <div id="menu-list">
 <c:forEach var="i" items="${menu.menuElements}">
-    <div style="border: black solid 2px" class="item">
+    <div style="" class="item" align="center">
         <img src="data:image/jpg;base64,${i.base64Image}" width="300px" height="300px"><br>
         <c:url value="ElementInfoController" var="url">
             <c:param name="elementId" value="${i.elementId}" />

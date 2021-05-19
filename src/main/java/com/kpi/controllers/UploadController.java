@@ -2,6 +2,7 @@ package com.kpi.controllers;
 
 import com.kpi.dao.MenuElementDao;
 import com.kpi.dao.mysql.MenuElementMySQLDao;
+import com.kpi.models.Menu;
 import com.kpi.models.MenuElement;
 
 import javax.servlet.*;
@@ -31,6 +32,7 @@ public class UploadController extends HttpServlet {
                     Double.parseDouble(request.getParameter("price")),
                     buf));
         }
+        request.setAttribute("menu", new Menu(menuElementDao.getAll()));
         request.getRequestDispatcher("WEB-INF/jsp/menuUpdatePage.jsp").forward(request, response);
     }
 }

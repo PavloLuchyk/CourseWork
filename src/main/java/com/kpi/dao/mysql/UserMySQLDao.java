@@ -17,13 +17,14 @@ public class UserMySQLDao implements UserDao {
 
     @Override
     public void add(User a) {
-        String insert = "insert into user(username, email, passwordHash, salt, phoneNumber) VALUES(?,?,?,?,?);";
+        String insert = "insert into user(username, email, passwordHash, salt, phoneNumber, address) VALUES(?,?,?,?,?,?);";
         try(PreparedStatement preparedStatement = getConnection().prepareStatement(insert)) {
             preparedStatement.setString(1, a.getUsername());
             preparedStatement.setString(2, a.getEmail());
             preparedStatement.setBytes(3, a.getPasswordHash());
             preparedStatement.setBytes(4, a.getPasswordSalt());
             preparedStatement.setString(5, a.getPhoneNumber());
+            preparedStatement.setString(6, a.getAddress());
             preparedStatement.executeUpdate();
         } catch (SQLException | ClassNotFoundException e){
             System.out.println(e.getMessage());

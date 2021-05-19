@@ -15,6 +15,7 @@
   <span id="passwordCheck"></span> <br>
   Confirm password: <input type="password" id="confirm_password" onkeyup="check()" required>
   <span id="message"></span> <br>
+  Address:          <input type="text"  name="address" required> <br>
   Phone number:     <input type="text"  name="phoneNumber" required> <br>
   <input type="submit" id="submitButton" value="Register">
 </form>
