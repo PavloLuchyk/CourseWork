@@ -6,6 +6,7 @@
 </head>
 <body>
 <%@include file="header.jsp"%>
+<div>${errorMessage}</div>
 <table border="1" class="table" id="cart">
     <tr>
         <td>Element id</td>

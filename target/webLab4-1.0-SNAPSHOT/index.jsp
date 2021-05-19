@@ -20,8 +20,6 @@
     </jsp:include>
 </c:forEach>
 </div>
-<a href="hello-servlet">Hello Servlet</a>
-<a href="IndexController">Hello Servlet</a>
 <%@include file="WEB-INF/jsp/footer.jsp"%>
 <script src="static/js/cartScript.js"></script>
 </body>

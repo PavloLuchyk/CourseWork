@@ -8,10 +8,15 @@
 <div>
     <h1>Add new menu element</h1>
     <form method="post" action="UploadController" enctype="multipart/form-data">
+        <label>Element's name</label>
         <input type="text" name="name"><br>
+        <label>Element's description</label>
         <input type="text" name="description"><br>
+        <label>Element's ingredients</label>
         <input type="text" name="ingredients"><br>
+        <label>Element's price</label>
         <input type="text" name="price"><br>
+        <label>Element's image</label>
         <input type="file" name="file" accept="image/*"><br>
         <input type="submit" value="Add"><br>
     </form>

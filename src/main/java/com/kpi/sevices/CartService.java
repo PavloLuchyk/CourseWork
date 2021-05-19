@@ -52,16 +52,20 @@ public class CartService {
             userId = (int) request.getSession().getAttribute("userId");
         }
         ArrayList<OrderDetails> orderDetails = getCartList(request);
-        Order order = new Order(userId, new Timestamp(System.currentTimeMillis()));
-        OrderDao orderDao = new OrderMySQLDao();
-        orderDao.add(order);
-        int orderId = orderDao.getAll().get(orderDao.getAll().size()-1).getOrderId();
-        OrderDetailsMySQLDao orderDetailsDao = new OrderDetailsMySQLDao();
-        for (OrderDetails i: orderDetails){
-            i.setOrderId(orderId);
-            orderDetailsDao.add(i);
+        if (!orderDetails.isEmpty()) {
+            Order order = new Order(userId, new Timestamp(System.currentTimeMillis()));
+            OrderDao orderDao = new OrderMySQLDao();
+            orderDao.add(order);
+            int orderId = orderDao.getAll().get(orderDao.getAll().size() - 1).getOrderId();
+            OrderDetailsMySQLDao orderDetailsDao = new OrderDetailsMySQLDao();
+            for (OrderDetails i : orderDetails) {
+                i.setOrderId(orderId);
+                orderDetailsDao.add(i);
+            }
+            request.getSession().setAttribute("orderDetails", new ArrayList<>());
+        } else {
+            request.setAttribute("errorMessage", "Order is empty!");
         }
-        request.getSession().setAttribute("orderDetails", new ArrayList<>());
     }
 
     private static ArrayList<OrderDetails> getCartList(HttpServletRequest request){
