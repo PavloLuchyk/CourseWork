@@ -5,12 +5,14 @@ public class UserWrapper {
     private String email;
     private String password;
     private String phoneNumber;
+    private String address;
 
-    public UserWrapper(String username, String email, String password, String phoneNumber) {
+    public UserWrapper(String username, String email, String password, String phoneNumber, String address) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
+        this.address = address;
     }
 
     public UserWrapper(String username, String email, String phoneNumber) {
@@ -50,5 +52,13 @@ public class UserWrapper {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

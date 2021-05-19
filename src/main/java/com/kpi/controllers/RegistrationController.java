@@ -25,22 +25,18 @@ public class RegistrationController extends HttpServlet {
         UserWrapper userWrapper = new UserWrapper(request.getParameter("username"),
                                                 request.getParameter("email"),
                                                 request.getParameter("password"),
-                                                request.getParameter("phoneNumber"));
+                                                request.getParameter("phoneNumber"),
+                                                request.getParameter("address"));
         UserValidation userValidation = new UserValidation();
         if (userValidation.validate(userWrapper).isResult()){
             User user = UserService.getUser(userWrapper);
             UserDao userDao = new MySQLDaoFactory().getUserDao();
             userDao.add(user);
-            response.setContentType("text/html");
-            request.getRequestDispatcher("WEB-INF/jsp/loginPage.jsp").include(request, response);
-            response.getWriter().println("<script src = \"" + request.getContextPath() +
-                    "/static/js/successfulRegistrationScript.js\">;</script>");
+            request.setAttribute("message", "You have successfully registered. Now you can log in");
+            request.getRequestDispatcher("WEB-INF/jsp/loginPage.jsp").forward(request, response);
         } else {
-            response.setContentType("text/html");
             request.setAttribute("message", userValidation.validate(userWrapper).getMessage());
-            request.getRequestDispatcher("WEB-INF/jsp/registrationPage.jsp").include(request,response);
-            response.getWriter().println("<script src = \"" + request.getContextPath() +
-                    "/static/js/failedRegistrationScript.js\">;</script>");
+            request.getRequestDispatcher("WEB-INF/jsp/registrationPage.jsp").forward(request,response);
         }
     }
 }

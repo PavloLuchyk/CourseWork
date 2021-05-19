@@ -23,7 +23,6 @@ public class LogInController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
         String username =  request.getParameter("username");
         String password = request.getParameter("password");
         ArrayList<User> users = new MySQLDaoFactory().getUserDao().getAll();
@@ -36,19 +35,13 @@ public class LogInController extends HttpServlet {
                         request.getSession().setAttribute("username", user.getUsername());
                         request.getSession().setAttribute("admin", user.isAdmin());
                         request.getRequestDispatcher("IndexController").forward(request, response);
-                    } else{
-                        request.getRequestDispatcher("WEB-INF/jsp/loginPage.jsp").include(request, response);
-                        response.getWriter().println("<script src = \"" + request.getContextPath() +
-                                "/static/js/loginScript.js\">;</script>");
-
                     }
                 } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
                     System.out.println("Exception! " + e.getMessage());
                 }
             }
         }
-        request.getRequestDispatcher("WEB-INF/jsp/loginPage.jsp").include(request, response);
-        response.getWriter().println("<script src = \"" + request.getContextPath() +
-                "/static/js/loginScript.js\">;</script>");
+        request.setAttribute("errorMessage", "Wrong username or password");
+        request.getRequestDispatcher("WEB-INF/jsp/loginPage.jsp").forward(request, response);
     }
 }

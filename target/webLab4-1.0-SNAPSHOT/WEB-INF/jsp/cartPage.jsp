@@ -16,10 +16,12 @@
         <td>Sub total</td>
     </tr>
 <c:forEach var="k" items="${orderMenuElements}">
-
+    <c:url value="ElementInfoController" var="url">
+        <c:param name="elementId" value="${k.value.elementId}" />
+    </c:url>
         <tr class="cartItem">
             <td>${k.key.menuElementId}</td>
-            <td><a href="#">${k.value.name}</a></td>
+            <td><a href="${url}">${k.value.name}</a></td>
             <td >${k.value.price}</td>
             <td>
                 <button class="minus">-</button>

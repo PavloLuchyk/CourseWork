@@ -47,24 +47,25 @@ public class CartService {
     }
 
     public static void order(HttpServletRequest request){
-        int userId = 3;
         if (request.getSession().getAttribute("userId") != null){
-            userId = (int) request.getSession().getAttribute("userId");
-        }
-        ArrayList<OrderDetails> orderDetails = getCartList(request);
-        if (!orderDetails.isEmpty()) {
-            Order order = new Order(userId, new Timestamp(System.currentTimeMillis()));
-            OrderDao orderDao = new OrderMySQLDao();
-            orderDao.add(order);
-            int orderId = orderDao.getAll().get(orderDao.getAll().size() - 1).getOrderId();
-            OrderDetailsMySQLDao orderDetailsDao = new OrderDetailsMySQLDao();
-            for (OrderDetails i : orderDetails) {
-                i.setOrderId(orderId);
-                orderDetailsDao.add(i);
+            int userId = (int) request.getSession().getAttribute("userId");
+            ArrayList<OrderDetails> orderDetails = getCartList(request);
+            if (!orderDetails.isEmpty()) {
+                Order order = new Order(userId, new Timestamp(System.currentTimeMillis()));
+                OrderDao orderDao = new OrderMySQLDao();
+                orderDao.add(order);
+                int orderId = orderDao.getAll().get(orderDao.getAll().size() - 1).getOrderId();
+                OrderDetailsMySQLDao orderDetailsDao = new OrderDetailsMySQLDao();
+                for (OrderDetails i : orderDetails) {
+                    i.setOrderId(orderId);
+                    orderDetailsDao.add(i);
+                }
+                request.getSession().setAttribute("orderDetails", new ArrayList<>());
+            } else {
+                request.setAttribute("errorMessage", "Order is empty!");
             }
-            request.getSession().setAttribute("orderDetails", new ArrayList<>());
         } else {
-            request.setAttribute("errorMessage", "Order is empty!");
+            request.setAttribute("errorMessage", "Please log in!");
         }
     }
 

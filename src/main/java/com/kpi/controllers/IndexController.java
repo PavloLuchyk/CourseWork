@@ -15,13 +15,13 @@ public class IndexController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Menu menu = new Menu(new MySQLDaoFactory().getMenuElementDao().getAll());
         request.setAttribute("menu", menu);
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/jsp/index.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Menu menu = new Menu(new MySQLDaoFactory().getMenuElementDao().getAll());
         request.setAttribute("menu", menu);
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/jsp/index.jsp").forward(request, response);
     }
 }

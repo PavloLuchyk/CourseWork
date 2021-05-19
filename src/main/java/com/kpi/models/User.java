@@ -12,8 +12,9 @@ public class User {
     private String phoneNumber;
     private Timestamp creationTime;
     private boolean admin;
+    private String address;
 
-    public User(int userId, String username, String email, byte[] passwordHash, byte[] passwordSalt, String phoneNumber, Timestamp creationTime, boolean admin) {
+    public User(int userId, String username, String email, byte[] passwordHash, byte[] passwordSalt, String phoneNumber, Timestamp creationTime, boolean admin, String address) {
         this.userId = userId;
         this.username = username;
         this.email = email;
@@ -22,6 +23,7 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.creationTime = creationTime;
         this.admin = admin;
+        this.address = address;
     }
 
     public User(String username, String email, byte[] passwordHash, byte[] passwordSalt, String phoneNumber, Timestamp creationTime) {
@@ -34,12 +36,13 @@ public class User {
         this.creationTime = creationTime;
     }
 
-    public User(String username, String email, byte[] passwordHash, byte[] passwordSalt, String phoneNumber) {
+    public User(String username, String email, byte[] passwordHash, byte[] passwordSalt, String phoneNumber, String address) {
         this.username = username;
         this.email = email;
         this.passwordHash = passwordHash;
         this.passwordSalt = passwordSalt;
         this.phoneNumber = phoneNumber;
+        this.address = address;
     }
 
     public User(int userId ,String username, String email, String phoneNumber) {
@@ -111,6 +114,14 @@ public class User {
 
     public void setAdmin(boolean admin) {
         this.admin = admin;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     @Override

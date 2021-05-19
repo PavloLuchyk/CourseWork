@@ -15,3 +15,4 @@
         <a href="ProfileController">Profile</a>
     </c:if>
 </nav>
+<hr style="border: black 2px solid; background-color: black;">

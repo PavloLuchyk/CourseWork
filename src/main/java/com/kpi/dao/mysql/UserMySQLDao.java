@@ -44,7 +44,7 @@ public class UserMySQLDao implements UserDao {
 
     @Override
     public void update(User a) {
-        String update ="update user set username = ?, email = ?, passwordHash = ?, salt = ?, phoneNumber = ?, admin = ? where userId = ?;";
+        String update ="update user set username = ?, email = ?, passwordHash = ?, salt = ?, phoneNumber = ?, admin = ?, address = ? where userId = ?;";
         try(PreparedStatement preparedStatement = getConnection().prepareStatement(update)) {
             preparedStatement.setString(1, a.getUsername());
             preparedStatement.setString(2, a.getEmail());
@@ -52,7 +52,8 @@ public class UserMySQLDao implements UserDao {
             preparedStatement.setBytes(4, a.getPasswordSalt());
             preparedStatement.setString(5, a.getPhoneNumber());
             preparedStatement.setBoolean(6, a.isAdmin());
-            preparedStatement.setInt(7, a.getUserId());
+            preparedStatement.setString(7, a.getAddress());
+            preparedStatement.setInt(8, a.getUserId());
             preparedStatement.executeUpdate();
         } catch (SQLException | ClassNotFoundException e){
             System.out.println(e.getMessage());
@@ -74,12 +75,25 @@ public class UserMySQLDao implements UserDao {
 
     @Override
     public void updateUserDetails(User a){
-        String update ="update user set username = ?, email = ?, phoneNumber = ? where userId = ?;";
+        String update ="update user set username = ?, email = ?, phoneNumber = ?, address = ? where userId = ?;";
         try(PreparedStatement preparedStatement = getConnection().prepareStatement(update)) {
             preparedStatement.setString(1, a.getUsername());
             preparedStatement.setString(2, a.getEmail());
             preparedStatement.setString(3, a.getPhoneNumber());
-            preparedStatement.setInt(4, a.getUserId());
+            preparedStatement.setString(4, a.getAddress());
+            preparedStatement.setInt(5, a.getUserId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void updateAdmin(int id, boolean status) {
+        String update ="update user set admin = ? where userId = ?;";
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(update)) {
+            preparedStatement.setBoolean(1, status);
+            preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
         } catch (SQLException | ClassNotFoundException e){
             System.out.println(e.getMessage());
@@ -92,7 +106,7 @@ public class UserMySQLDao implements UserDao {
         try(PreparedStatement preparedStatement = getConnection().prepareStatement(select)) {
             preparedStatement.setInt(1, id);
             try(ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()){
+                if (resultSet.next()){
                     return new User(
                             resultSet.getInt(1),
                             resultSet.getString(2),
@@ -101,7 +115,8 @@ public class UserMySQLDao implements UserDao {
                             resultSet.getBytes(5),
                             resultSet.getString(6),
                             resultSet.getTimestamp(7),
-                            resultSet.getBoolean(8)
+                            resultSet.getBoolean(8),
+                            resultSet.getString(9)
                     );
                 }
 
@@ -127,7 +142,8 @@ public class UserMySQLDao implements UserDao {
                         resultSet.getBytes(5),
                         resultSet.getString(6),
                         resultSet.getTimestamp(7),
-                        resultSet.getBoolean(8)
+                        resultSet.getBoolean(8),
+                        resultSet.getString(9)
                 ));
             }
         } catch (SQLException | ClassNotFoundException e){

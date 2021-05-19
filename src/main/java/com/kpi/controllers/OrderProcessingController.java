@@ -2,21 +2,15 @@ package com.kpi.controllers;
 
 import com.kpi.dao.DAOFactory;
 import com.kpi.dao.OrderDao;
-import com.kpi.dao.OrderDetailsDao;
 import com.kpi.dao.mysql.MySQLDaoFactory;
-import com.kpi.dao.mysql.OrderMySQLDao;
-import com.kpi.dao.mysql.OrderDetailsMySQLDao;
-import com.kpi.models.MenuElement;
 import com.kpi.models.Order;
-import com.kpi.models.OrderDetails;
-import com.kpi.sevices.CartService;
+import com.kpi.sevices.OrderHistoryService;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 @WebServlet(name = "OrderProcessingController", value = "/OrderProcessingController")
 public class OrderProcessingController extends HttpServlet {
@@ -25,13 +19,7 @@ public class OrderProcessingController extends HttpServlet {
         DAOFactory daoFactory = new MySQLDaoFactory();
         OrderDao orderDao = daoFactory.getOrderDao();
         ArrayList<Order> orders = orderDao.getUndoneOrders();
-        HashMap<Order, HashMap<OrderDetails, MenuElement>> undoneOrders = new HashMap<>();
-        OrderDetailsDao orderDetailsDao = daoFactory.getOrderDetailsDao();
-        for (Order order: orders){
-            ArrayList<OrderDetails> orderDetails = orderDetailsDao.getAllByOrdersId(order.getOrderId());
-            undoneOrders.put(order, CartService.getOrderDetailsWithMenu(orderDetails));
-        }
-        request.setAttribute("undoneOrders", undoneOrders);
+        request.setAttribute("undoneOrders", OrderHistoryService.getOrders(daoFactory, orders));
         request.getRequestDispatcher("WEB-INF/jsp/orderProcessingPage.jsp").forward(request, response);
     }
 

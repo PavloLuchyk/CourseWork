@@ -23,6 +23,9 @@ public class UserValidation implements Validation<UserWrapper> {
         if (!isPasswordValid(data.getPassword())){
             return new ValidationResult(false, "Password is not strong enough");
         }
+        if (!isAddressValid(data.getAddress())){
+            return new ValidationResult(false, "Address is already in use");
+        }
         return new ValidationResult(true, "Successful");
     }
 
@@ -87,5 +90,18 @@ public class UserValidation implements Validation<UserWrapper> {
         Pattern pattern = Pattern.compile(passwordRegex);
         Matcher matcher = pattern.matcher(password);
         return matcher.matches();
+    }
+
+    public boolean isAddressValid(String address){
+        if (address == null || address.length() < 10 || address.length() > 45){
+            return false;
+        }
+        ArrayList<User> users = new UserMySQLDao().getAll();
+        for (User user: users){
+            if (user.getAddress().equals(address)){
+                return false;
+            }
+        }
+        return true;
     }
 }

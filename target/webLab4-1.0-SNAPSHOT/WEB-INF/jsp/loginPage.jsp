@@ -5,6 +5,8 @@
 </head>
 <body>
 <%@include file="header.jsp"%>
+<div style="color: green;">${message}</div>
+<div style="color: red;">${errorMessage}</div>
 <form method="post" action="LogInController" id="loginForm">
     <input type="text" name="username"><br>
     <input type="password" name="password"><br>

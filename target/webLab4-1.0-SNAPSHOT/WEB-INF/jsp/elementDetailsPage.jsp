@@ -12,9 +12,7 @@
         <p>${menuElement.description}</p>
         <p>${menuElement.ingredients}</p>
         <p>${menuElement.price}</p>
-        <button class="minus">-</button>
-        <input name="quantity" type="number" value="1" readonly="readonly" class="input" form="order ${menuElement.elementId}">
-        <button class="plus">+</button>
+        <input name="quantity" type="number" value="1" min="1" class="input" form="order ${menuElement.elementId}">
         <form method="post" action="ElementInfoController" id="order ${menuElement.elementId}">
             <input name="menuElementId" type="hidden" value="${menuElement.elementId}">
             <input type="submit" value="Add to cart">

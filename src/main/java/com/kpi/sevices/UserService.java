@@ -25,14 +25,14 @@ public class UserService {
         return salt;
     }
 
-    public static User getUser(String username, String email, String password, String phoneNumber){
+    public static User getUser(String username, String email, String password, String phoneNumber, String address){
         try {
             byte[] salt = getSalt();
             byte[] passwordHash = getPasswordHash(password, salt);
-            return new User(username, email, passwordHash, salt, phoneNumber);
+            return new User(username, email, passwordHash, salt, phoneNumber, address);
         } catch (NoSuchAlgorithmException|InvalidKeySpecException e){
             System.out.println(e.getMessage());
-            return new User("", "", new byte[1], new byte[1], phoneNumber);
+            return new User("", "", new byte[1], new byte[1], phoneNumber, "");
         }
     }
 
@@ -44,10 +44,11 @@ public class UserService {
                             userWrapper.getEmail(),
                             passwordHash,
                             salt,
-                            userWrapper.getPhoneNumber());
+                            userWrapper.getPhoneNumber(),
+                            userWrapper.getAddress());
         } catch (NoSuchAlgorithmException|InvalidKeySpecException e){
             System.out.println(e.getMessage());
-            return new User("", "", new byte[1], new byte[1], "");
+            return new User("", "", new byte[1], new byte[1], "", "");
         }
     }
 }

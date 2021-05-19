@@ -6,22 +6,20 @@
 <body>
 <%@include file="header.jsp" %>
 
-<c:forEach items="${undoneOrders}" var="order">
+<c:forEach items="${allOrders}" var="order">
     <hr style="border: black 2px solid; background-color: black;">
     <table border="1">
         <tr>
             <td>Order id</td>
+            <td>User Id</td>
             <td>Order time</td>
+            <td>Processed</td>
         </tr>
         <tr>
             <td> ${order.key.orderId}</td>
+            <td>${order.key.userId}</td>
             <td> ${order.key.time}</td>
-            <td>
-                <form action="OrderProcessingController" method="post">
-                    <input type="hidden" name="orderId" value="${order.key.orderId}">
-                    <input type="submit" value="Process order">
-                </form>
-            </td>
+            <td>${order.key.status}</td>
         </tr>
     </table>
     <h4>Order details</h4>

@@ -6,6 +6,7 @@
 </head>
 <body>
 <%@include file="header.jsp"%>
+<div style="color: red;">${message}</div>
 <form action="RegistrationController" onsubmit="return validate" method="post" id="registration">
   Username:         <input type="text" name="username" size="32" required> <br>
   Email:            <input type="email" name="email" id="email" onkeyup="emailValidation()" required>
@@ -17,7 +18,6 @@
   Phone number:     <input type="text"  name="phoneNumber" required> <br>
   <input type="submit" id="submitButton" value="Register">
 </form>
-<input type="hidden" id="registrationMessage" value="${message}">
 <%@include file="footer.jsp"%>
 <script type="text/javascript" src="<c:url value="/static/js/registrationScript.js" />"></script>
 </body>
