@@ -45,7 +45,17 @@ public class User {
         this.address = address;
     }
 
-    public User(int userId ,String username, String email, String phoneNumber) {
+    public User(int userId, String username, String email, byte[] passwordHash, byte[] passwordSalt, String phoneNumber, Timestamp creationTime) {
+        this.userId = userId;
+        this.username = username;
+        this.email = email;
+        this.passwordHash = passwordHash;
+        this.passwordSalt = passwordSalt;
+        this.phoneNumber = phoneNumber;
+        this.creationTime = creationTime;
+    }
+
+    public User(int userId , String username, String email, String phoneNumber) {
         this.userId = userId;
         this.username = username;
         this.email = email;

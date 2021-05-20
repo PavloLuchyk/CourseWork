@@ -2,12 +2,16 @@ package com.kpi.sevices;
 
 import com.kpi.dao.MenuElementDao;
 import com.kpi.dao.OrderDao;
+import com.kpi.dao.UserDao;
 import com.kpi.dao.mysql.MenuElementMySQLDao;
 import com.kpi.dao.mysql.OrderMySQLDao;
 import com.kpi.dao.mysql.OrderDetailsMySQLDao;
+import com.kpi.dao.mysql.UserMySQLDao;
 import com.kpi.models.MenuElement;
 import com.kpi.models.Order;
 import com.kpi.models.OrderDetails;
+import com.kpi.models.User;
+import com.kpi.validation.UserValidation;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
@@ -49,27 +53,46 @@ public class CartService {
     public static void order(HttpServletRequest request){
         if (request.getSession().getAttribute("userId") != null){
             int userId = (int) request.getSession().getAttribute("userId");
-            ArrayList<OrderDetails> orderDetails = getCartList(request);
-            if (!orderDetails.isEmpty()) {
-                Order order = new Order(userId, new Timestamp(System.currentTimeMillis()));
-                OrderDao orderDao = new OrderMySQLDao();
-                orderDao.add(order);
-                int orderId = orderDao.getAll().get(orderDao.getAll().size() - 1).getOrderId();
-                OrderDetailsMySQLDao orderDetailsDao = new OrderDetailsMySQLDao();
-                for (OrderDetails i : orderDetails) {
-                    i.setOrderId(orderId);
-                    orderDetailsDao.add(i);
-                }
-                request.getSession().setAttribute("orderDetails", new ArrayList<>());
-            } else {
-                request.setAttribute("errorMessage", "Order is empty!");
-            }
+            processOrder(request, userId);
         } else {
-            request.setAttribute("errorMessage", "Please log in!");
+            String address = request.getParameter("address");
+            String phoneNumber = request.getParameter("phoneNumber");
+            if (new UserValidation().isPhoneNumberValid(phoneNumber)) {
+                UserDao userDao = new UserMySQLDao();
+                if (userDao.existsByAddress(address) || userDao.existsByPhoneNumber(phoneNumber)) {
+                    User user = userDao.getByAddress(address) != null ?
+                            userDao.getByAddress(address) :
+                            userDao.getByPhoneNumber(phoneNumber);
+                    processOrder(request, user.getUserId());
+                } else {
+                    userDao.addWithoutPassword(phoneNumber, address);
+                    processOrder(request, userDao.getByPhoneNumber(phoneNumber).getUserId());
+                }
+            } else {
+                request.setAttribute("errorMessage", "Phone number is not valid");
+            }
         }
     }
 
-    private static ArrayList<OrderDetails> getCartList(HttpServletRequest request){
+    private static void processOrder(HttpServletRequest request, int id){
+        ArrayList<OrderDetails> orderDetails = getCartList(request);
+        if (!orderDetails.isEmpty()) {
+            Order order = new Order(id, new Timestamp(System.currentTimeMillis()));
+            OrderDao orderDao = new OrderMySQLDao();
+            orderDao.add(order);
+            int orderId = orderDao.getAll().get(orderDao.getAll().size() - 1).getOrderId();
+            OrderDetailsMySQLDao orderDetailsDao = new OrderDetailsMySQLDao();
+            for (OrderDetails i : orderDetails) {
+                i.setOrderId(orderId);
+                orderDetailsDao.add(i);
+            }
+            request.getSession().setAttribute("orderDetails", new ArrayList<>());
+        } else {
+            request.setAttribute("errorMessage", "Order is empty!");
+        }
+    }
+
+    public static ArrayList<OrderDetails> getCartList(HttpServletRequest request){
         ArrayList<OrderDetails> orderDetails;
         if (request.getSession().getAttribute("orderDetails") == null){
             orderDetails = new ArrayList<>();

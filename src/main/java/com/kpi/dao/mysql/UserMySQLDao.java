@@ -29,7 +29,86 @@ public class UserMySQLDao implements UserDao {
         } catch (SQLException | ClassNotFoundException e){
             System.out.println(e.getMessage());
         }
+    }
 
+    @Override
+    public void addWithoutPassword(String phoneNumber, String address){
+        String insert = "insert into user(phoneNumber, address) VALUES(?,?);";
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(insert)) {
+            preparedStatement.setString(1, phoneNumber);
+            preparedStatement.setString(2, address);
+            preparedStatement.executeUpdate();
+        } catch (SQLException | ClassNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public boolean existsByPhoneNumber(String phoneNumber) {
+        String select = "select * from user where phoneNumber = ?;";
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(select)) {
+            preparedStatement.setString(1, phoneNumber);
+            try(ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()){
+                    return true;
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    @Override
+    public boolean existsByAddress(String address) {
+        String select = "select * from user where address = ?;";
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(select)) {
+            preparedStatement.setString(1, address);
+            try(ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()){
+                    return true;
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    @Override
+    public User getByAddress(String address) {
+        String select = "select * from user where address = ?;";
+        return getUserByCharacteristic(address, select);
+    }
+
+    private User getUserByCharacteristic(String characteristic, String statemaet) {
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(statemaet)) {
+            preparedStatement.setString(1, characteristic);
+            try(ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()){
+                    return new User(
+                            resultSet.getInt(1),
+                            resultSet.getString(2),
+                            resultSet.getString(3),
+                            resultSet.getBytes(4),
+                            resultSet.getBytes(5),
+                            resultSet.getString(6),
+                            resultSet.getTimestamp(7),
+                            resultSet.getBoolean(8),
+                            resultSet.getString(9)
+                    );
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+        return new User(-1,"","",new byte[1], new byte[1], "", new Timestamp(-1));
+    }
+
+    @Override
+    public User getByPhoneNumber(String phoneNumber) {
+        String select = "select * from user where phoneNumber = ?;";
+        return getUserByCharacteristic(phoneNumber, select);
     }
 
     @Override
@@ -125,7 +204,7 @@ public class UserMySQLDao implements UserDao {
         } catch (SQLException | ClassNotFoundException e){
             System.out.println(e.getMessage());
         }
-        return new User("","",new byte[1], new byte[1], "", new Timestamp(-1));
+        return new User(-1,"","",new byte[1], new byte[1], "", new Timestamp(-1));
     }
 
     @Override
