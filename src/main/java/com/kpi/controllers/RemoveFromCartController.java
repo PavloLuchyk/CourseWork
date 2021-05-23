@@ -14,11 +14,6 @@ import static com.kpi.sevices.CartService.getOrderDetailsWithMenu;
 @WebServlet(name = "RemoveFromCartController", value = "/RemoveFromCartController")
 public class RemoveFromCartController extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ArrayList<OrderDetails> orderDetails = CartService.getCartList(request);
         int elementId = Integer.parseInt(request.getParameter("elementId"));

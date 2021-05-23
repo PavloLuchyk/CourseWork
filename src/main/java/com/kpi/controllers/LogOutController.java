@@ -12,9 +12,4 @@ public class LogOutController extends HttpServlet {
         request.getSession().removeAttribute("userId");
         request.getRequestDispatcher("WEB-INF/jsp/loginPage.jsp").forward(request, response);
     }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
 }

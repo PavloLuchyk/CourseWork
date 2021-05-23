@@ -11,11 +11,6 @@ import java.io.IOException;
 @WebServlet(name = "GrantAccessController", value = "/GrantAccessController")
 public class GrantAccessController extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if  (request.getSession().getAttribute("admin")!= null
                 && (boolean) request.getSession().getAttribute("admin")) {

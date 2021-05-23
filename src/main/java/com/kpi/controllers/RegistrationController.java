@@ -22,21 +22,6 @@ public class RegistrationController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserWrapper userWrapper = new UserWrapper(request.getParameter("username"),
-                                                request.getParameter("email"),
-                                                request.getParameter("password"),
-                                                request.getParameter("phoneNumber"),
-                                                request.getParameter("address"));
-        UserValidation userValidation = new UserValidation();
-        if (userValidation.validate(userWrapper).isResult()){
-            User user = UserService.getUser(userWrapper);
-            UserDao userDao = new MySQLDaoFactory().getUserDao();
-            userDao.add(user);
-            request.setAttribute("message", "You have successfully registered. Now you can log in");
-            request.getRequestDispatcher("WEB-INF/jsp/loginPage.jsp").forward(request, response);
-        } else {
-            request.setAttribute("message", userValidation.validate(userWrapper).getMessage());
-            request.getRequestDispatcher("WEB-INF/jsp/registrationPage.jsp").forward(request,response);
-        }
+        UserService.register(request, response);
     }
 }

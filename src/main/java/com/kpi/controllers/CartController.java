@@ -13,10 +13,6 @@ import java.util.ArrayList;
 @WebServlet(name = "CartController", value = "/CartController")
 public class CartController extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    }
-
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CartService.addToCart(request);
         request.getRequestDispatcher("IndexController").forward(request, response);

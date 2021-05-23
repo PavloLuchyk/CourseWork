@@ -1,7 +1,6 @@
 package com.kpi.models;
 
-import java.io.InputStream;
-import java.math.BigDecimal;
+
 import java.util.Base64;
 import java.util.Objects;
 
@@ -13,10 +12,6 @@ public class MenuElement {
     private double price;
     private byte[] image;
     private String base64Image;
-
-    public MenuElement(){
-
-    }
 
     public MenuElement(int elementId, String name, String description, String ingredients, double price, byte[] image) {
         this.elementId = elementId;
@@ -36,12 +31,6 @@ public class MenuElement {
         this.price = price;
     }
 
-    public MenuElement(String name, String description, String ingredients, double price) {
-        this.name = name;
-        this.description = description;
-        this.ingredients = ingredients;
-        this.price = price;
-    }
 
     public int getElementId() {
         return elementId;

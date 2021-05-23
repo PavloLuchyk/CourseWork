@@ -14,11 +14,6 @@ import java.io.IOException;
 @WebServlet(name = "DeleteElementController", value = "/DeleteElementController")
 public class DeleteElementController extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int elementId = Integer.parseInt(request.getParameter("elementId"));
         DAOFactory mySQLDaoFactory = new MySQLDaoFactory();

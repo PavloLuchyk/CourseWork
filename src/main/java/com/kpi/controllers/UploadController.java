@@ -17,10 +17,6 @@ import java.io.InputStream;
         maxRequestSize = 1024 * 1024 * 5 * 5)
 public class UploadController extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    }
-
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         MenuElementDao menuElementDao = new MenuElementMySQLDao();
         try(InputStream inputStream = request.getPart("file").getInputStream()) {

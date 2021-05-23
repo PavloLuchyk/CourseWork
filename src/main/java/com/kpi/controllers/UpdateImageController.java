@@ -15,11 +15,6 @@ import java.io.InputStream;
         maxRequestSize = 1024 * 1024 * 5 * 5)
 public class UpdateImageController extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int elementId = Integer.parseInt(request.getParameter("elementId"));
         MenuElementDao menuElementDao = new MenuElementMySQLDao();

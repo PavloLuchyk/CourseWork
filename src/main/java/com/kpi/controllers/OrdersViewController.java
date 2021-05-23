@@ -28,10 +28,4 @@ public class OrdersViewController extends HttpServlet {
         request.getRequestDispatcher("WEB-INF/jsp/allOrdersPage.jsp").forward(request, response);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-
-
 }
